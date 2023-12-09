@@ -62,7 +62,7 @@ public class Tutorial_GrapplingGun : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             SetGrapplePoint();
-            isSwing = true;
+            
         }
         else if (Input.GetKey(KeyCode.Mouse0))
         {
@@ -98,12 +98,25 @@ public class Tutorial_GrapplingGun : MonoBehaviour
             Vector2 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
             RotateGun(mousePos, true);
         }
-
-        if (isSwing)
+        
+        if (isSwing == true)
         {
-
+            // launchSpeed의 값을 바꾸면 바로 적용 (x)
+            //Vector3 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
+            //Vector3 RotationVector = mousePos - gunHolder.position;
+            //float angle = Mathf.Atan2(RotationVector.y, RotationVector.x) * Mathf.Rad2Deg;
+            //if (rotateOverTime)
+            //{
+            //    gunHolder.rotation = Quaternion.Lerp(gunHolder.rotation, Quaternion.AngleAxis(angle, Vector3.forward), Time.deltaTime * rotationSpeed);
+            //}
+        }
+        else if(isSwing == false)
+        {
+            //Vector3 how = gunHolder.position;
+            //gunHolder.rotation = Quaternion.Euler(new Vector3(how.x, how.y, 0));
         }
     }
+
 
     void RotateGun(Vector3 lookPoint, bool allowRotationOverTime)
     {
@@ -120,7 +133,7 @@ public class Tutorial_GrapplingGun : MonoBehaviour
         }
     }
 
-    void SetGrapplePoint()
+    public void SetGrapplePoint()
     {
         Vector2 distanceVector = m_camera.ScreenToWorldPoint(Input.mousePosition) - gunPivot.position;
         RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector.normalized);
@@ -134,12 +147,18 @@ public class Tutorial_GrapplingGun : MonoBehaviour
                     grapplePoint = _hit.point;
                     grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
                     grappleRope.enabled = true;
+
+                    isSwing = true;
+                }
+                else
+                {
+                    Debug.Log("지정한 범위 밖이다");
                 }
             }
         }
         else
         {
-            Debug.Log("안녕");
+            Debug.Log("확인1");
         }
 
         //else if ((hasMaxDistance || Vector2.Distance(_hit.point, firePoint.position) > maxDistnace) && !Physics2D.Raycast(firePoint.position, distanceVector.normalized))
