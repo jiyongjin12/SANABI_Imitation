@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScript : MonoBehaviour
+public class SwingMovement : MonoBehaviour
 {
     //public float rotationSpeed = 5f;
     //public float moveSpeed = 2f;
@@ -157,6 +157,7 @@ public class TestScript : MonoBehaviour
     }
     
     */
+
     //=====================================================================
 
     //public Tutorial_GrapplingGun grapplingGun;  // 그래플링 건 스크립트
@@ -215,6 +216,12 @@ public class TestScript : MonoBehaviour
     private Rigidbody2D playerRigidbody;
     private bool isGrappling;
 
+    [Header("키코드")]
+    public KeyCode LeftKey = KeyCode.A;
+    public KeyCode RightKey = KeyCode.D;
+    public KeyCode DashKey = KeyCode.LeftShift;
+
+
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
@@ -225,24 +232,26 @@ public class TestScript : MonoBehaviour
         if (grapplingGun.isSwing == true)
         {
             isGrappling = true;
-            //RotatePlayerTowardsGrapplePoint();
+            RotatePlayerTowardsGrapplePoint();
         }
         else
         {
             isGrappling = false;
+            ResetPlayerRotation();
         }
 
         // 'A' 키를 누르면 왼쪽으로 움직임
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(LeftKey))
         {
-            MovePlayer(Vector2.left);
+            MovePlayer(Vector2.up); // left
         }
 
         // 'D' 키를 누르면 오른쪽으로 움직임
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(RightKey))
         {
-            MovePlayer(Vector2.right);
+            MovePlayer(Vector2.down); // right
         }
+    
     }
 
     void RotatePlayerTowardsGrapplePoint()
@@ -254,19 +263,16 @@ public class TestScript : MonoBehaviour
 
     }
 
+    public float rotationSpeed = 45f;
+    void ResetPlayerRotation()
+    {
+        //transform.rotation = Quaternion.Euler(0, 0, 0);
+        Quaternion targetRotation = Quaternion.Euler(0, 0, 0);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
     void MovePlayer(Vector2 direction)
     {
-        //if (isGrappling) // 로프를 타고 움직일 때 플레이어에게 가속을 줌
-        //{
-
-        //    // 플레이어의 로컬 방향을 기준으로 한 방향으로 이동
-        //    Vector2 localDirection = transform.TransformDirection(direction);
-
-        //    // 중력의 영향을 제외한 힘을 가함
-        //    playerRigidbody.AddForce(localDirection * movementSpeed - Vector2.up * customGravity * playerRigidbody.mass);
-        //}
-
-
         if (isGrappling)
         {
             Vector2 localDirection = transform.TransformDirection(direction);
