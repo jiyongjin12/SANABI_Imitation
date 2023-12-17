@@ -215,6 +215,13 @@ public class TestScript : MonoBehaviour
     private Rigidbody2D playerRigidbody;
     private bool isGrappling;
 
+    public float rotationSpeed = 200f;
+
+    [Header("키 코드")]
+    public KeyCode LeftKey = KeyCode.A;
+    public KeyCode RightKey = KeyCode.D;
+    public KeyCode DashKey = KeyCode.LeftShift;
+
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
@@ -225,24 +232,34 @@ public class TestScript : MonoBehaviour
         if (grapplingGun.isSwing == true)
         {
             isGrappling = true;
-            //RotatePlayerTowardsGrapplePoint();
+            RotatePlayerTowardsGrapplePoint();
         }
         else
         {
             isGrappling = false;
+            ResetPlayerRotation();
         }
 
         // 'A' 키를 누르면 왼쪽으로 움직임
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(LeftKey))
         {
-            MovePlayer(Vector2.left);
+            MovePlayer(Vector2.up);
         }
 
         // 'D' 키를 누르면 오른쪽으로 움직임
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(RightKey))
         {
-            MovePlayer(Vector2.right);
+            MovePlayer(Vector2.down);
         }
+    }
+
+    void ResetPlayerRotation()
+    {
+        // 목표 회전값 (오른쪽을 바라보는 회전)
+        Quaternion targetRotation = Quaternion.Euler(0, 0, 0);
+
+        // 현재 회전값에서 목표 회전값으로 천천히 회전
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     void RotatePlayerTowardsGrapplePoint()
