@@ -59,6 +59,15 @@ public class Tutorial_GrapplingGun : MonoBehaviour
 
     private void Update()
     {
+        if (autoConfigureDistance == true)
+        {
+            m_springJoint2D.autoConfigureDistance = true;
+        }
+        else
+        {
+            m_springJoint2D.autoConfigureDistance = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             SetGrapplePoint();
@@ -161,16 +170,11 @@ public class Tutorial_GrapplingGun : MonoBehaviour
             Debug.Log("확인1");
         }
 
-        //else if ((hasMaxDistance || Vector2.Distance(_hit.point, firePoint.position) > maxDistnace) && !Physics2D.Raycast(firePoint.position, distanceVector.normalized))
-        //{
-        //    Debug.Log("만약 건축물이 없으면");
-        //}
-
     }
 
     public void Grapple()
     {
-        m_springJoint2D.autoConfigureDistance = false;
+        //m_springJoint2D.autoConfigureDistance = false;
         if (!launchToPoint && !autoConfigureDistance)
         {
             m_springJoint2D.distance = targetDistance;

@@ -684,3 +684,7 @@ MonoBehaviour:
   grapplingGun: {fileID: 3809646939637966702}
   movementSpeed: 5
   customGravity: 0
+  rotationSpeed: 350
+  LeftKey: 97
+  RightKey: 100
+  DashKey: 304

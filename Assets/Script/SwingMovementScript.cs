@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScript : MonoBehaviour
+public class SwingMovementScript : MonoBehaviour
 {
     //public float rotationSpeed = 5f;
     //public float moveSpeed = 2f;

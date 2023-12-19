@@ -1367,6 +1367,18 @@ PrefabInstance:
       propertyPath: m_camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 3809646939637966702, guid: 046a8cff4f408c94281256393397334e, type: 3}
+      propertyPath: launchSpeed
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809646939637966702, guid: 046a8cff4f408c94281256393397334e, type: 3}
+      propertyPath: launchToPoint
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809646939637966702, guid: 046a8cff4f408c94281256393397334e, type: 3}
+      propertyPath: autoConfigureDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3809646940739171360, guid: 046a8cff4f408c94281256393397334e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2723227
@@ -1438,6 +1450,14 @@ PrefabInstance:
     - target: {fileID: 3809646941428845190, guid: 046a8cff4f408c94281256393397334e, type: 3}
       propertyPath: m_Name
       value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809646941428845215, guid: 046a8cff4f408c94281256393397334e, type: 3}
+      propertyPath: customGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809646941428845215, guid: 046a8cff4f408c94281256393397334e, type: 3}
+      propertyPath: movementSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3809646941428845215, guid: 046a8cff4f408c94281256393397334e, type: 3}
       propertyPath: rotationSpeed
