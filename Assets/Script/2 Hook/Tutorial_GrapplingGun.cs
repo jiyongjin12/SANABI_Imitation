@@ -36,12 +36,12 @@ public class Tutorial_GrapplingGun : MonoBehaviour
     }
 
     [Header("Launching:")]
-    [SerializeField] private bool launchToPoint = true;
+    [SerializeField] public bool launchToPoint = true; // pr
     [SerializeField] private LaunchType launchType = LaunchType.Physics_Launch;
-    [SerializeField] private float launchSpeed = 1;
+    [SerializeField] public float launchSpeed = 1; // pr
 
     [Header("No Launch To Point")]
-    [SerializeField] private bool autoConfigureDistance = false;
+    [SerializeField] public bool autoConfigureDistance = false; // pr
     [SerializeField] private float targetDistance = 3;
     [SerializeField] private float targetFrequncy = 1;
 
@@ -54,7 +54,6 @@ public class Tutorial_GrapplingGun : MonoBehaviour
     {
         grappleRope.enabled = false;
         m_springJoint2D.enabled = false;
-
     }
 
     private void Update()

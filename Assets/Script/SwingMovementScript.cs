@@ -212,12 +212,18 @@ public class SwingMovementScript : MonoBehaviour
     public float movementSpeed = 5f;  // 플레이어 이동 속도
     public float customGravity = 9.8f;  // 사용자 정의 중력값
 
-    private Rigidbody2D playerRigidbody;
     private bool isGrappling;
 
+    public bool isDash;
     public float rotationSpeed = 200f;
 
-    [Header("키 코드")]
+    [SerializeField] private float Distance;
+
+    [Header("Physics Ref:")]
+    private Rigidbody2D playerRigidbody;
+
+
+    [Header("KeyCode")]
     public KeyCode LeftKey = KeyCode.A;
     public KeyCode RightKey = KeyCode.D;
     public KeyCode DashKey = KeyCode.LeftShift;
@@ -251,6 +257,35 @@ public class SwingMovementScript : MonoBehaviour
         {
             MovePlayer(Vector2.down);
         }
+
+        if (Input.GetKeyDown(DashKey))
+        {
+            
+
+            if (isDash == false)
+            {
+                StartCoroutine(Dashe());
+            }
+        }
+    }
+
+    IEnumerator Dashe() // 코드가 더럽 고쳐야 할듯 + 눈속임?
+    {
+        isDash = true;
+        Distance = grapplingGun.m_springJoint2D.distance;
+        Debug.Log(Distance);
+
+        grapplingGun.launchToPoint = false;
+        grapplingGun.m_springJoint2D.frequency = 0;
+        grapplingGun.autoConfigureDistance = true;
+
+        yield return new WaitForSeconds(1f);
+        
+        isDash = false;
+
+        grapplingGun.launchToPoint = true;
+        grapplingGun.m_springJoint2D.frequency = grapplingGun.launchSpeed;
+        grapplingGun.autoConfigureDistance = false;
     }
 
     void ResetPlayerRotation()
@@ -273,17 +308,6 @@ public class SwingMovementScript : MonoBehaviour
 
     void MovePlayer(Vector2 direction)
     {
-        //if (isGrappling) // 로프를 타고 움직일 때 플레이어에게 가속을 줌
-        //{
-
-        //    // 플레이어의 로컬 방향을 기준으로 한 방향으로 이동
-        //    Vector2 localDirection = transform.TransformDirection(direction);
-
-        //    // 중력의 영향을 제외한 힘을 가함
-        //    playerRigidbody.AddForce(localDirection * movementSpeed - Vector2.up * customGravity * playerRigidbody.mass);
-        //}
-
-
         if (isGrappling)
         {
             Vector2 localDirection = transform.TransformDirection(direction);

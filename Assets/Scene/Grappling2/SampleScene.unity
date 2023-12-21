@@ -918,6 +918,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1781235684 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3809646941428845215, guid: 046a8cff4f408c94281256393397334e, type: 3}
+  m_PrefabInstance: {fileID: 3809646939831285135}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b700e38d075d4614b8203c4a977efe86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!231 &1781235685 stripped
+SpringJoint2D:
+  m_CorrespondingSourceObject: {fileID: 3809646941428845189, guid: 046a8cff4f408c94281256393397334e, type: 3}
+  m_PrefabInstance: {fileID: 3809646939831285135}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1833375752
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,7 +1189,9 @@ MonoBehaviour:
   grapplingGun: {fileID: 0}
   movementSpeed: 5
   customGravity: 9.8
+  isDash: 0
   rotationSpeed: 45
+  Distance: 0
   LeftKey: 97
   RightKey: 100
   DashKey: 304
@@ -1364,6 +1382,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3809646939637966702, guid: 046a8cff4f408c94281256393397334e, type: 3}
+      propertyPath: Movement
+      value: 
+      objectReference: {fileID: 1781235684}
+    - target: {fileID: 3809646939637966702, guid: 046a8cff4f408c94281256393397334e, type: 3}
       propertyPath: m_camera
       value: 
       objectReference: {fileID: 519420031}
@@ -1373,11 +1395,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3809646939637966702, guid: 046a8cff4f408c94281256393397334e, type: 3}
       propertyPath: launchToPoint
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809646939637966702, guid: 046a8cff4f408c94281256393397334e, type: 3}
+      propertyPath: targetFrequncy
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3809646939637966702, guid: 046a8cff4f408c94281256393397334e, type: 3}
       propertyPath: autoConfigureDistance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3809646940739171360, guid: 046a8cff4f408c94281256393397334e, type: 3}
       propertyPath: m_LocalScale.x
@@ -1447,6 +1473,10 @@ PrefabInstance:
       propertyPath: m_GravityScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3809646941428845189, guid: 046a8cff4f408c94281256393397334e, type: 3}
+      propertyPath: m_DampingRatio
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3809646941428845190, guid: 046a8cff4f408c94281256393397334e, type: 3}
       propertyPath: m_Name
       value: player
@@ -1463,5 +1493,9 @@ PrefabInstance:
       propertyPath: rotationSpeed
       value: 350
       objectReference: {fileID: 0}
+    - target: {fileID: 3809646941428845215, guid: 046a8cff4f408c94281256393397334e, type: 3}
+      propertyPath: p_springJoint2D
+      value: 
+      objectReference: {fileID: 1781235685}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 046a8cff4f408c94281256393397334e, type: 3}
