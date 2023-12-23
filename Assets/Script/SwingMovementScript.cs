@@ -209,7 +209,10 @@ public class SwingMovementScript : MonoBehaviour
     //==================================================================
 
     public Tutorial_GrapplingGun grapplingGun;  // 그래플링 건 스크립트
+    public Ghost ghost;
+
     public float movementSpeed = 5f;  // 플레이어 이동 속도
+    public float dashSpeed = 55f;
     public float customGravity = 9.8f;  // 사용자 정의 중력값
 
     private bool isGrappling;
@@ -217,7 +220,7 @@ public class SwingMovementScript : MonoBehaviour
     public bool isDash;
     public float rotationSpeed = 200f;
 
-    [SerializeField] private float Distance;
+    private float Distance;
 
     [Header("Physics Ref:")]
     private Rigidbody2D playerRigidbody;
@@ -239,53 +242,74 @@ public class SwingMovementScript : MonoBehaviour
         {
             isGrappling = true;
             RotatePlayerTowardsGrapplePoint();
+
+            moveIf();
         }
         else
         {
             isGrappling = false;
             ResetPlayerRotation();
         }
+        
+        
+    }
 
+    void moveIf()
+    {
         // 'A' 키를 누르면 왼쪽으로 움직임
         if (Input.GetKey(LeftKey))
         {
-            MovePlayer(Vector2.up);
+            MovePlayer(Vector2.up, movementSpeed);
         }
 
         // 'D' 키를 누르면 오른쪽으로 움직임
         if (Input.GetKey(RightKey))
         {
-            MovePlayer(Vector2.down);
+            MovePlayer(Vector2.down, movementSpeed);
         }
 
         if (Input.GetKeyDown(DashKey))
         {
-            
-
             if (isDash == false)
             {
-                StartCoroutine(Dashe());
+                StartCoroutine(DasheLineLock());
             }
+        }
+
+        if (isDash == true)
+        {
+            StartCoroutine(DashSpeed());
         }
     }
 
-    IEnumerator Dashe() // 코드가 더럽 고쳐야 할듯 + 눈속임?
+    IEnumerator DashSpeed()
+    {
+        movementSpeed = dashSpeed;
+
+        yield return new WaitForSeconds(.1f);
+
+        movementSpeed = 3;
+    }
+
+    IEnumerator DasheLineLock() // 코드가 더럽 고쳐야 할듯 + 눈속임?
     {
         isDash = true;
         Distance = grapplingGun.m_springJoint2D.distance;
-        Debug.Log(Distance);
+        //Debug.Log(Distance);
 
         grapplingGun.launchToPoint = false;
         grapplingGun.m_springJoint2D.frequency = 0;
         grapplingGun.autoConfigureDistance = true;
+        ghost.makeGhost = true;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.7f);
         
         isDash = false;
 
         grapplingGun.launchToPoint = true;
         grapplingGun.m_springJoint2D.frequency = grapplingGun.launchSpeed;
         grapplingGun.autoConfigureDistance = false;
+        ghost.makeGhost = false;
     }
 
     void ResetPlayerRotation()
@@ -306,18 +330,19 @@ public class SwingMovementScript : MonoBehaviour
 
     }
 
-    void MovePlayer(Vector2 direction)
+    void MovePlayer(Vector2 direction, float Speed)
     {
         if (isGrappling)
         {
             Vector2 localDirection = transform.TransformDirection(direction);
 
-            Vector2 horizontalForce = localDirection * movementSpeed;
+            Vector2 horizontalForce = localDirection * Speed;
             Vector2 verticalForce = -Vector2.up * customGravity * playerRigidbody.mass;
 
             playerRigidbody.AddForce(horizontalForce);
             playerRigidbody.AddForce(verticalForce);
         }
+        Debug.Log(Speed);
     }
 
 
